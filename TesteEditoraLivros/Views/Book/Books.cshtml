@@ -1,0 +1,77 @@
+﻿@model TesteEditoraLivros.Models.BooksModelView
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bem Vindo !  </h1>
+    <p>Abaixo o catálogo <a href="https://docs.microsoft.com/aspnet/core"></a>.</p>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-3 col-md-3" style="font-weight:bold">Palavra - Chave</div>
+    <div class="col-sm-3 col-md-3" style="font-weight:bold">Data de Publicação Inicial</div>
+    <div class="col-sm-3 col-md-3" style="font-weight:bold">Data de Publicação Final</div>
+    <div class="col-sm-3 col-md-3" style="font-weight:bold">Ordenação dos Títulos</div>
+</div>
+<form asp-action="Books">
+    <div class="input-group">
+        <input asp-for="KeyWord" class="form-control" />
+        <input asp-for="InitialDate" type="date" class="form-control" />
+        <input asp-for="FinalDate" type="date" class="form-control" />
+        <select asp-for="OrderName" class="form-control">
+            <option value="A">A - Z</option>
+            <option value="Z">Z - A</option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-primary btn-flat" type="submit">Filtrar</button>
+        </div>
+    </div>
+</form>
+
+
+<table class="table" style="padding-top:3em">
+    <thead>
+        <tr>
+            <th>Capa</th>
+            <th>Título</th>
+            <th>Editora</th>
+            <th>Autor</th>
+            <th>Data de Publicação</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BookList)
+        {
+            <tr>
+                <td>
+                    <img src="@item.UrlImage" height="60" width="40" alt="ImagemNaoEncontrada"/>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishingCompany)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+
+                <td>
+                   @item.PublicationDate.ToShortDateString()
+                </td>
+                <td>
+                    @if (ViewBag.Role == "Administrator")
+                    {
+                        @Html.ActionLink("Editar", "EditBook", new {  id = item.Id  });
+                    }
+
+                    @Html.ActionLink("Detalhes", "BookDetails", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

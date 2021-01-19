@@ -1,0 +1,41 @@
+﻿@model TesteEditoraLivros.Models.LoginModelView
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutLogin";
+}
+
+<center>
+    <h1>Loja de Livros</h1>
+</center>
+
+
+@if (ViewBag.Error != null)
+{
+    <p class="alert alert-danger">@ViewBag.Error</p>
+}
+<hr />
+<div class="text-center">
+    <center>
+        <form asp-action="Logon" class="form-signin" style="width:50%">
+            <input name="ReturnUrl" value="@ViewBag.ReturnUrl" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+            <input asp-for="Login" class="form-control" placeholder="Padrão: admin" />
+            <span asp-validation-for="Login" class="text-danger"></span>
+            <br />
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input asp-for="Password" class="form-control" type="password" placeholder="Padrão: admin" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <br />
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+    </center>
+    
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

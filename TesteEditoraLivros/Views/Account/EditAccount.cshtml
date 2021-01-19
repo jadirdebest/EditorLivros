@@ -1,0 +1,56 @@
+﻿@model TesteEditoraLivros.Models.RegisterModelView
+
+@{
+    ViewData["Title"] = "EditAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>EditAccount</h1>
+
+<h4>RegisterModelView</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditAccount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="UserId" type="hidden" />
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NickName" class="control-label"></label>
+                <input asp-for="NickName" class="form-control" />
+                <span asp-validation-for="NickName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AvatarUrl" class="control-label"></label>
+                <input asp-for="AvatarUrl" class="form-control" />
+                <span asp-validation-for="AvatarUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleProfile" class="control-label"></label>
+                <select asp-for="RoleProfile" class="form-control">
+                    @foreach (var role in Model.RoleList)
+                    {
+                        <option value="@role.Id">@role.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="op" value="Atualizar" class="btn btn-primary" />
+                <input type="submit" name="op" value="Deletar" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Register">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
